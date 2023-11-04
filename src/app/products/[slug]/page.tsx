@@ -1,5 +1,9 @@
 import { getProduct, getProducts } from "@/service/products";
 import { notFound } from "next/navigation";
+import jeansImage from "../../../../public/images/jeans.jpg";
+import shoesImage from "../../../../public/images/shoes.jpg";
+import tshirtImage from "../../../../public/images/tshirt.jpg";
+import Image from "next/image";
 
 export const revalidate = 3;
 
@@ -18,7 +22,17 @@ export function generateMetadata({ params }: Props) {
 export default async function ProductPage({ params: { slug } }: Props) {
   const product = await getProduct(slug);
 
-  return <h1>{product?.name} 제품 설명 페이지</h1>;
+  return (
+    <>
+      <h1>{product?.name} 제품 설명 페이지</h1>
+      <Image
+        src={`/images/${product?.image}`}
+        alt={product?.name}
+        width="300"
+        height="300"
+      />
+    </>
+  );
 }
 
 export async function generateStaticParams() {
